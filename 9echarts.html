@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业用工选择分布饼图</title>
+  <!-- 国内加速的 ECharts CDN（适配国内访问） -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    /* 关键：消除白边、占满容器 */
+    * {margin:0;padding:0;box-sizing:border-box}
+    html,body {width:100%;height:100%;overflow:hidden;background:transparent}
+    #main {width:100%;height:100%}
+  </style>
+</head>
+<body>
+<div id="main"></div>
+<script>
+// 初始化图表容器
+const chartDom = document.getElementById('main');
+const myChart = echarts.init(chartDom);
+
+// 替换为你的饼图配置（基于原示例优化适配透明背景）
+const option = {
+  color: ['#eeb8ec', '#ffb2b5', '#ffbd6c'],
+  backgroundColor: 'transparent', // 关键：图表背景透明
+  tooltip: {
+    trigger: 'item',
+    formatter: '{b}<br>占比：{c}%'
+  },
+  legend: {
+    top: '5%',
+    left: 'center'
+  },
+  series: [
+    {
+      name: '企业用工选择分布',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      padAngle: 5,
+      itemStyle: {
+        borderRadius: 10
+      },
+      label: {
+        show: false,
+        position: 'center'
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: 40,
+          fontWeight: 'bold',
+          formatter: '{b}\n{c}%'
+        }
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: 4.3, name: '愿意拆分岗位剥离语音业务企业' },
+        { value: 81.7, name: '直接拒收听障求职者企业' },
+        { value: 14, name: '缴纳残保金替代招录残疾人企业' }
+      ]
+    }
+  ]
+};
+
+// 渲染图表
+myChart.setOption(option);
+
+// 关键：iframe 缩放时图表自动适配
+window.addEventListener('resize', () => {
+  myChart.resize();
+});
+</script>
+</body>
+</html>
